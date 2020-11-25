@@ -6,10 +6,43 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Issue;
+use App\Models\Reply;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    public function can_issue()
+    {
+        $role = $this->role;
+        if ($role == 'employee' || $role == 'admin') {
+            return true;
+        }
+        return false;
+    }
+
+    public function is_admin()
+    {
+        $role = $this->role;
+        if ($role == 'admin') {
+            return true;
+        }
+        return false;
+    }
+
+
+    public function issue()
+    {
+
+        $this->hasMany(Issue::class);
+    }
+
+    public function reply()
+    {
+
+        $this->hasManyThrough(reply::class, issue::class);
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +53,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'user_id',
     ];
 
     /**
