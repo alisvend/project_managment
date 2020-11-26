@@ -2,15 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
+use App\Models\User;
+use App\Models\Project;
 use App\Models\Milestone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Project;
-use App\Models\Task;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ManagerController extends Controller
 {
+    protected function create(Request $request)
+    {
+        return User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'user_id' => $request->manager_id,
+            
+        ]);}
+
+
     public function displayProject()
     {
         $user = Auth::id();
@@ -97,5 +111,35 @@ class ManagerController extends Controller
         }
     }
 
-
+public function userSignUp(Request $request){
+        $validator = Validator::make($request->all(),[
+            "name" => "required",
+            "email" => "required|email",
+            "password" => "required",
+            
+        ]);
+        if($validator->fails()){
+            return response()->json(["status"=>"failed","message"=>"validation_error","errors"=>$validator->errors()]);
+        }
+        //$name = $request->name;
+        $userDataArray = array(
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'user_id' => $request->manager_id,
+            
+        );
+        $user_status = User::where("email",$request->email)->first();
+        if(!is_null($user_status)){
+            return response()->json(["status"=>"failed","success"=>false,"message" => "Email is already registered"]);
+        }
+        $user = User::create($userDataArray);
+        if(!is_null($user)){
+            return response()->json(["status" => $this->status_code,"success"=>true,"message"=>"Registration completed successfully","data" => $user]);
+        }
+        else{
+            return response()->json(["status"=>"failed","success"=>false,"message"=>"failed to register"]);
+        }
+}
 }

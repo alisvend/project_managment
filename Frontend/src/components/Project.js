@@ -12,19 +12,19 @@ export default class Project extends React.Component {
         };
     }
 
-    fetchMilestones() {
-                if (sessionStorage.getItem('loggedIn')) {
-                    apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/milestones',{projectID:this.props.id})
-                        .then(response => {
-                            const milestones = response.data;
-                            this.setState({ milestones: milestones });
+    // fetchMilestones() {
+    //             if (sessionStorage.getItem('loggedIn')) {
+    //                 apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/milestones',{projectID:this.props.id})
+    //                     .then(response => {
+    //                         const milestones = response.data;
+    //                         this.setState({ milestones: milestones });
                             
-                        })
-                        .catch(error => console.error(error)
-                        ))
+    //                     })
+    //                     .catch(error => console.error(error)
+    //                     ))
         
-                }
-            }
+    //             }
+    //         }
 
             fetchTasks() {
                 if (sessionStorage.getItem('loggedIn')) {
@@ -42,9 +42,10 @@ export default class Project extends React.Component {
 
             componentDidMount(){
                 console.log(this.props.id);
-                this.fetchMilestones();
+              //  this.fetchMilestones();
                 
             }
+           
 
 
     render(){
@@ -57,12 +58,12 @@ export default class Project extends React.Component {
                                 <thead className='thead-dark'>
                                     <tr>
                                        
-                                        <th colspan="2">Project Name</th>
+                                        <th colSpan="2">Project Name</th>
                                       
                                     </tr>
                                 </thead>
                                 <tbody className="">
-                                    {this.state.milestones.map((milestones) => {
+                                    {this.props.milestone.map((milestones) => {
                                         return (
                                             <tr key={milestones.id}>
                                                 <td>{milestones.name}</td>
