@@ -27,10 +27,11 @@ class ManagerController extends Controller
 
     public function displayTask(Request $request)
     {
-        $user = Auth::id();
-        $tasks = Task::where('milestone_id', $request->milestoneID)->with('employee')->latest()->simplePaginate(6);
+       
+        $tasks = Task::where('milestone_id', $request->milestoneID)->with('employee')->get();
         return $tasks;
     }
+
 
     public function storeProject(Request $request)
     {
@@ -80,8 +81,8 @@ class ManagerController extends Controller
     public function deleteTask(Request $request)
     {   
         if ($request->user()->is_admin()) {
-            $task = Task::where('task_id', $request->get('task_id'));
-            $task->delete;
+            $task = Task::where('id', $request->get('taskId'));
+            $task->delete();
         } else {
             return $data['message'] = 'You have no sufficient permissions';
         }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Task;
+use App\Models\User;
 
 class Employee extends Model
 {
@@ -12,6 +13,11 @@ class Employee extends Model
 
     public function task(){
 
-        $this->hasMany(Task::class);
+       return $this->hasMany(Task::class);
+    }
+
+    public function user(){
+
+        return $this->belongsTo(User::class);
     }
 }

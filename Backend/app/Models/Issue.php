@@ -13,13 +13,13 @@ class Issue extends Model
 
     public function user(){
 
-        $this->belongsTo(User::class);
+       return $this->belongsTo(User::class);
 
     }
 
     public function reply(){
 
-        $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class);
         
     }
 }
