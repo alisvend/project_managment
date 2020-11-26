@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 import Login from './components/login';
-import Expense from './components/Expense';
+
 import Register from './components/Register';
 import axios from 'axios';
 import Projects from './components/Projects';

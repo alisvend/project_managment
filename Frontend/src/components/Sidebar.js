@@ -2,13 +2,13 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import apiClient from '../services/api';
 import Projects from './Projects';
+import Project from './Project';
 
 export default class Sidebar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: [],
-
+            projectID:null,
 
         };
 
@@ -16,12 +16,23 @@ export default class Sidebar extends React.Component {
 
 
     handleChangeProj=(id)=>{
-        return <Redirect to='/project' />
+
+      this.setState({projectID:id});
+    
+
         
+    }
+    projectexists(){
+        if(this.state.projectID!==null){
+            return true;
+        }
+        else{return false;}
+
     }
 
     render() {
-
+        
+       
         return (
 
                
@@ -61,7 +72,7 @@ export default class Sidebar extends React.Component {
                                         aria-expanded="true" aria-controls="collapseTwo">
                                         <i className="fas fa-fw fa-cog"></i>
                                         {/* <select>Projects</select> */}
-                                        <Projects onChangeProjId={this.handleChangeProj}   loggedIn={true}/>
+                                        <Projects onChangeProjId={this.handleChangeProj} loggedIn={true}/>
                                     </a>
                                     <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                         <div className="bg-white py-2 collapse-inner rounded">
@@ -368,6 +379,14 @@ export default class Sidebar extends React.Component {
 
                 
                 <div className="container-fluid">
+                    {
+                    (this.projectexists())?(
+                        <Project id={this.state.projectID}/>
+                    ):( <> </>
+                   
+                       )
+                    }
+    
                             </div>                             
 </div>
 </div>
