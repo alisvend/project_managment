@@ -57,11 +57,11 @@ const App = () => {
             <Register {...props} login={login} />
           )} />
           <Route path='/adminView' render={props => (
-            <Sidebar login={login}/>
+            <Sidebar {...props} login={login}/>
           
           )} />
            <Route path='/employeeView' render={props => (
-          <EmpSidebar login={login} />
+          <EmpSidebar {...props} login={login} />
            
           )} />
           {/* <Route path='/categories' render={props => (

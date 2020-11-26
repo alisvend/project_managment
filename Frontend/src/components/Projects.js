@@ -2,18 +2,8 @@ import React from 'react';
 import apiClient from '../services/api';
 
 const Projects = (props) => {
-    const [projects, setProjects] = React.useState([]);
-    React.useEffect(() => {
-        if (props.loggedIn) {
-            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.get('/api/projects')
-                .then(response => {
-                    setProjects(response.data.data)
-                })
-                .catch(error => console.error(error)))
-
-        }
-    }, []);
-    const projectList = projects.map((project) =>
+   
+    const projectList = props.projects.map((project) =>
         <option value={project.id} key={project.id} >{project.projectName}</option>
 
     );

@@ -6,29 +6,41 @@ import Project from './Project';
 import Task from './Task';
 import EmpRegister from "./EmployeeForm";
 import axios from "axios";
+import FormDialog from "./NewProject";
+
 export default class Sidebar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            projects: [],
             projectID: null,
             milestones: [],
             addEmp: false,
-            navigate:true
+            navigate: true,
         };
 
     }
-  logout = () => {
+    fetchProjects = () => {
+        if (sessionStorage.getItem('loggedIn')) {
+            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.get('/api/projects')
+                .then(response => {
+                    this.setState({ projects: response.data.data })
+                })
+                .catch(error => console.error(error)))
+
+        }
+    }
+    logout = () => {
         axios.post('/logout').then(response => {
-          if (response.status === 204) {
-            
-            // sessionStorage.setItem('loggedIn', false);
-            //   sessionStorage.setItem('role', null);
-              sessionStorage.clear();
-              this.setState({ navigate: false });
-              
-          }
+            if (response.status === 204) {
+                // sessionStorage.setItem('loggedIn', false);
+                //   sessionStorage.setItem('role', null);
+                sessionStorage.clear();
+                this.setState({ navigate: false });
+
+            }
         })
-      };
+    };
     fetchMilestones() {
         if (sessionStorage.getItem('loggedIn')) {
             apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/milestones', { projectID: this.state.projectID })
@@ -42,7 +54,16 @@ export default class Sidebar extends React.Component {
 
         }
     }
-
+    handleAddMile = () => {
+       
+        this.fetchMilestones();
+    }
+    componentDidMount = () => {
+        this.fetchProjects();
+    }
+    handleAddProj = () => {
+        this.fetchProjects();
+    }
     handleChangeProj = (id) => {
         this.fetchMilestones();
         this.setState({ projectID: id });
@@ -59,24 +80,24 @@ export default class Sidebar extends React.Component {
         else { return false; }
 
     }
-    handleAddEmployee = (e) => { 
-        this.setState({ projectID:null });
+    handleAddEmployee = (e) => {
+        this.setState({ projectID: null });
         this.setState({ addEmp: true });
 
     }
 
     render() {
         if (!this.state.navigate) {
-            return <Redirect to="/"/>
+            return <Redirect to="/" />
         }
 
         if (!sessionStorage.getItem('loggedIn')) {
             return <Redirect to="/" />
         } else {
-        
+
             return (
 
-              
+
                 <>
 
                     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -113,7 +134,7 @@ export default class Sidebar extends React.Component {
                                 aria-expanded="true" aria-controls="collapseTwo">
                                 <i className="fas fa-fw fa-cog"></i>
                                 {/* <select>Projects</select> */}
-                                <Projects onChangeProjId={this.handleChangeProj} {...this.props} loggedIn={true} />
+                                <Projects onChangeProjId={this.handleChangeProj} projects={this.state.projects} loggedIn={true} />
                             </a>
                             <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                 <div className="bg-white py-2 collapse-inner rounded">
@@ -139,21 +160,7 @@ export default class Sidebar extends React.Component {
                         </li>
 
                         <li className="nav-item">
-                            <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                                aria-expanded="true" aria-controls="collapseUtilities">
-                                <i className="fas fa-fw fa-wrench"></i>
-                                <span>Utilities</span>
-                            </a>
-                            <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities"
-                                data-parent="#accordionSidebar">
-                                <div className="bg-white py-2 collapse-inner rounded">
-                                    <h6 className="collapse-header">Custom Utilities:</h6>
-                                    <a className="collapse-item" href="utilities-color.html">Colors</a>
-                                    <a className="collapse-item" href="utilities-border.html">Borders</a>
-                                    <a className="collapse-item" href="utilities-animation.html">Animations</a>
-                                    <a className="collapse-item" href="utilities-other.html">Other</a>
-                                </div>
-                            </div>
+                            <FormDialog onAddProj={this.handleAddProj} {...this.props} loggedIn={true} />
                         </li>
 
 
@@ -421,7 +428,7 @@ export default class Sidebar extends React.Component {
 
                             <div className="container-fluid">
                                 {
-                                    this.projectexists() ? (<Project milestone={this.state.milestones} />) : (
+                                    this.projectexists() ? (<Project milestone={this.state.milestones} onAddMilestone={this.handleAddMile} projects={this.state.projects} projectID={this.state.projectID} />) : (
                                         this.state.addEmp ? (<EmpRegister />) : (<></>)
                                     )
                                 }
@@ -430,9 +437,9 @@ export default class Sidebar extends React.Component {
                             </div>
                         </div>
                     </div> </>
-                    
-                
-                        
+
+
+
             )
         }
 

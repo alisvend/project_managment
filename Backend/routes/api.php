@@ -26,3 +26,5 @@ Route::middleware('auth:sanctum')->post('/milestones', [ManagerController::class
 Route::middleware('auth:sanctum')->post('/tasks', [ManagerController::class,'displayTask']);
 Route::middleware('auth:sanctum')->post('/deleteTask', [ManagerController::class,'deleteTask']);
 Route::middleware('auth:sanctum')->post('/regEmp', [ManagerController::class,'userSignUp']);
+Route::middleware('auth:sanctum')->post('/addProject', [ManagerController::class,'storeProject']);
+Route::middleware('auth:sanctum')->post('/addMile', [ManagerController::class,'storeMilestone']);
