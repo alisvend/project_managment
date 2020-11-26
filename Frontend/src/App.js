@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 import Login from './components/login';
-import Expense from './components/Expense';
+
 import Register from './components/Register';
 import axios from 'axios';
 import Projects from './components/Projects';
+import Sidebar from './components/Sidebar';
 const App = () => {
   const [loggedIn, setLoggedIn] = React.useState(
     sessionStorage.getItem('loggedIn') === 'true' || false
@@ -24,13 +25,16 @@ const App = () => {
   };
   const authLink = loggedIn
     ? <button onClick={logout} className="nav-link btn btn-link navSplitReg"><h4>Logout</h4></button>
+
     : <NavLink to='/login' className="nav-link navSplitLog"><h4>Login</h4></NavLink>;
   const regLink = loggedIn
     ? <NavLink to='#' className="nav-link"></NavLink>
+    
     : <NavLink to='/register' className="nav-link navSplitReg"><h4>Register</h4></NavLink>;
   return (
+    
     <Router>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+      {/* <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav">
 
@@ -46,7 +50,8 @@ const App = () => {
             </li>
           </ul>
         </div>
-      </nav>
+      </nav> */}
+      <Sidebar/>
       <div className=" mt-5 pt-5" >
         <Switch>
 

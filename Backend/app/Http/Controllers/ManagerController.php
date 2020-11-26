@@ -20,8 +20,8 @@ class ManagerController extends Controller
 
     public function displayMilestone(Request $request)
     {
-        $user = Auth::id();
-        $milestones = Milestone::where('project_id', $request->projectID)->latest()->simplePaginate(6);
+        $pid=$request->projectID;
+        $milestones = Milestone::where('project_id', $pid)->get();
         return $milestones;
     }
 

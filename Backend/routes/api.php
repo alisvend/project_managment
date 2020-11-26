@@ -22,4 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::middleware('auth:sanctum')->get('/projects', [ManagerController::class,'displayProject']);
-
+Route::middleware('auth:sanctum')->post('/milestones', [ManagerController::class,'displayMilestone']);
