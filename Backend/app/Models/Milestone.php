@@ -14,11 +14,11 @@ class Milestone extends Model
 
     public function task(){
 
-        $this->hasMany(Task::class);
+       return $this->hasMany(Task::class);
     }
 
     public function project(){
 
-        $this->belongsTo(Project::class);
+       return $this->belongsTo(Project::class);
     }
 }

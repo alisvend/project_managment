@@ -13,11 +13,11 @@ class Reply extends Model
 
     public function issue(){
 
-        $this->belongsTo(Issue::class);
+       return $this->belongsTo(Issue::class);
     }
 
     public function user(){
 
-        $this->belongsTo(User::class);
+       return $this->belongsTo(User::class);
     }
 }

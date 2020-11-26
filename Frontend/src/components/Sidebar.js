@@ -16,12 +16,13 @@ export default class Sidebar extends React.Component {
 
 
     handleChangeProj=(id)=>{
-
+        console.log(this.state.projectID,'before')
       this.setState({projectID:id});
-    
-
+        
+        console.log(this.state.projectID)
         
     }
+    
     projectexists(){
         if(this.state.projectID!==null){
             return true;
@@ -382,6 +383,7 @@ export default class Sidebar extends React.Component {
                     {
                     (this.projectexists())?(
                         <Project id={this.state.projectID}/>
+                        
                     ):( <> </>
                    
                        )

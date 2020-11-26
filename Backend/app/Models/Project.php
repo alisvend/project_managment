@@ -13,11 +13,11 @@ class Project extends Model
 
     public function milestone(){
 
-        $this->hasMany(Milestone::class);
+       return $this->hasMany(Milestone::class);
     }
 
     public function user(){
 
-        $this->belongsTo(User::class);
+       return $this->belongsTo(User::class);
     }
 }
