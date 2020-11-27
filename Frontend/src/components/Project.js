@@ -66,7 +66,7 @@ export default class Project extends React.Component {
 
                             {this.props.projects.map((project) => {
                                 if (project.id == this.props.projectID) {
-                                    console.log(project);
+                                   
                                     if (project.status == 0) {
                                         status = "In Progress";
                                     } else { status = "Finished"; }
