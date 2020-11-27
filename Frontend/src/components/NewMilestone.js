@@ -30,6 +30,7 @@ export default function NewMilestone(props) {
     }
     const handleClickOpen = () => {
         setOpen(true);
+        setProjectId(props.projectID);
     };
 
     const handleClose = () => {

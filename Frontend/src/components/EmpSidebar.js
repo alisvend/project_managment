@@ -10,6 +10,10 @@ export default class EmpSidebar extends React.Component {
         super(props);
         this.state = {
            tasks:[],
+           navigate:true,
+           projects:[],
+           projectID:null,
+           milestones:[],
            
         };
 
@@ -17,7 +21,7 @@ export default class EmpSidebar extends React.Component {
     logout = () => {
         axios.post('/logout').then(response => {
           if (response.status === 204) {
-            
+            this.setState({navigate:false})  
             sessionStorage.setItem('loggedIn', false);
               sessionStorage.setItem('role', null);
               
@@ -25,9 +29,60 @@ export default class EmpSidebar extends React.Component {
         })
       };
 
+
+      projectexists() {
+        console.log(this.state.projectID != null, "result");
+        if (this.state.projectID != null) {
+            return true;
+
+        }
+        else { return false; }
+
+    }
+    fetchProjects = () => {
+        if (sessionStorage.getItem('loggedIn')) {
+            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.get('/api/employeeProjects')
+                .then(response => {
+                    this.setState({ projects: response.data.data })
+                })
+                .catch(error => console.error(error)))
+
+        }
+    }
+
+    componentDidMount(){
+        this.fetchProjects();
+
+    }
+    handleChangeProj = (id) => {
+        this.fetchMilestones();
+        this.setState({ projectID: id });
+
+
+    }
+
+    fetchMilestones() {
+        if (sessionStorage.getItem('loggedIn')) {
+            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/milestones', { projectID: this.state.projectID })
+                .then(response => {
+                    const milestones = response.data;
+                    this.setState({ milestones: milestones });
+
+                })
+                .catch(error => console.error(error)
+                ))
+
+        }
+    }
     render() {
 
+        if (!this.state.navigate) {
+            return <Redirect to="/login" />
+        }
 
+        if (!sessionStorage.getItem('loggedIn')) {
+            return <Redirect to="/login" />
+        } else {
         return (
 
 
@@ -67,7 +122,7 @@ export default class EmpSidebar extends React.Component {
                             aria-expanded="true" aria-controls="collapseTwo">
                             <i className="fas fa-fw fa-cog"></i>
                             {/* <select>Projects</select> */}
-                            {/* <Projects onChangeProjId={this.handleChangeProj} {...this.props} loggedIn={true} /> */}
+                            {/* <Projects onChangeProjId={this.handleChangeProj} val={this.state.projectID} projects={this.state.projects} loggedIn={true} /> */}
                         </a>
                         <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                             <div className="bg-white py-2 collapse-inner rounded">
@@ -361,7 +416,14 @@ export default class EmpSidebar extends React.Component {
 
 
                         <div className="container-fluid">
-                       
+                        {
+                                    this.projectexists() ? (<Project 
+                                         milestone={this.state.milestones} 
+                                         projects={this.state.projects} 
+                                         projectID={this.state.projectID} />) : (
+                                        <></>
+                                    )
+                                }
 
 
                         </div>
@@ -369,7 +431,7 @@ export default class EmpSidebar extends React.Component {
                 </div>
             </>
 
-        )
+        )}
 
     }
 

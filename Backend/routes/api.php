@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ManagerController;
-
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Auth\RegisterController;
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +32,4 @@ Route::middleware('auth:sanctum')->post('/addTask', [ManagerController::class,'s
 Route::middleware('auth:sanctum')->get('/getEmployees', [ManagerController::class,'getEmployeesByManager']);
 Route::middleware('auth:sanctum')->post('/deleteMilestone', [ManagerController::class,'deleteMilestone']);
 Route::middleware('auth:sanctum')->post('/deleteProject', [ManagerController::class,'deleteProject']);
+Route::middleware('auth:sanctum')->get('/employeeProjects', [EmployeeController::class,'getEmployeeProjects']);

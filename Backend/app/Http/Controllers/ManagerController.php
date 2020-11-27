@@ -71,7 +71,6 @@ class ManagerController extends Controller
         $task->user_id = Auth::id();
         $task->milestone_id = $request->get('milestoneID');
         $task->taskName = $request->get('taskName');
-        $task->percentage = $request->get('percentage');
         $task->save();
     }
 

@@ -22,4 +22,12 @@ class EmployeeController extends Controller
         ->where('user_id', Auth::id())
         ->update(['status' => $request->get('status')]);
     }
+
+    public function getEmployeeProjects(){
+        $user = Auth::id();
+        $projects = Task::where('user_id',$user)->with('milestone')->with('project')->get();
+        return $projects;
+
+    }
+
 }
