@@ -40,12 +40,24 @@ const Register= (props) => {
     if (toHome === true) {
         return <Redirect to='/projects' />
     }
-
+    const loginToaccount=()=>{
+        props.history.push('/login');
+    }
     
     return (
-        <div>
-            <h3>Register</h3>
-            <form onSubmit={handleSubmit}>
+        <div className="container">
+
+        <div className="card o-hidden border-0 shadow-lg my-5">
+            <div className="card-body p-0">
+                
+                <div className="row">
+                    <div className="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div className="col-lg-7">
+                        <div className="p-5">
+                            <div className="text-center">
+                                <h1 className="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+                            <form onSubmit={handleSubmit}>
             <div className="form-group">
                     <input
                         
@@ -98,7 +110,19 @@ const Register= (props) => {
                 {unknownError ? <div className="alert alert-danger">There was an error submitting your details.</div> : null}
                 <button type="submit" className="btn btn-primary">Register</button>  
             </form>
+                            <hr></hr>
+                            <div className="text-center">
+                                <a className="small" href="forgot-password.html">Forgot Password?</a>
+                            </div>
+                            <div className="text-center">
+                                <a className="small" onClick={loginToaccount}>Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+       </div>
     );
 };
 
