@@ -45,7 +45,7 @@ handleDeleteTask=(id)=>{
 <div   classsName="row"   >
 {this.state.tasks.map((tasks) => {
                                         return (
-                                            <div className="col-xl-3 col-md-6 mb-4">
+                                            <div className="col">
                                                 <div className="card border-left-primary shadow h-100 py-2">
                                                 <div className="card-body">
                                                         <div className="row no-gutters align-items-center" >
@@ -54,13 +54,17 @@ handleDeleteTask=(id)=>{
                                                            <div className="col mr-2  m-0 font-weigt-bold text-primary text-uppercase mb-2"> {tasks.employee.name}</div>
                                                            <div className="col mr-2   m-0 font-weigt-bold text-primary text-uppercase mb-2"> {tasks.percentage}</div>
                                                             <div className="col mr-2">
-                                                                <button onClick={() => { this.handleDeleteTask(tasks.id) }}>Delete</button>
+                                                              <div className="section">  <span className="trash" onClick={() => { this.handleDeleteTask(tasks.id) }}>Delete
+                                                                <span></span>
+                                                                <i></i>
+                                                                </span>
+                                                              </div>
                                                         </div>
                                                     </div> </div></div>
                                            </div>
                                               )})}
 
-<button>Add</button>
+<button className="plus radius" style={{marginRight:"1em",float:"right"}}></button>
 </div>
 
 
