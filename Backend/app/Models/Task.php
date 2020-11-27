@@ -15,16 +15,19 @@ class Task extends Model
 
     public function project(){
 
-       return $this->hasOneThrough(Project::class,Milestone::class,'milestone_id','project_id','id','id');
+       return $this->hasOneThrough(Project::class,Milestone::class,'id','id','milestone_id','project_id');
     }
 
 public function milestone(){
 
-    return $this->belongsTo(Milestone::class);
+    return $this->belongsTo(Milestone::class,'id');
 }
 
 public function employee(){
 
     return $this->belongsTo(User::class,'user_id');
 }
+
+
+ 
 }

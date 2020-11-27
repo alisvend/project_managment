@@ -18,7 +18,7 @@ class CreateTasksTable extends Migration
             $table->foreignId('milestone_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('taskName');
-            $table->integer('percentage')->nullable();
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

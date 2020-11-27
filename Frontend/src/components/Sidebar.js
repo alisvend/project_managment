@@ -82,7 +82,7 @@ export default class Sidebar extends React.Component {
     }
     handleAddEmployee = (e) => {
         this.setState({ projectID: null });
-        this.setState({ addEmp: true });
+        this.setState({ addEmp: true }); 
 
     }
     handleDeleteProject=(e)=>{
@@ -138,7 +138,7 @@ export default class Sidebar extends React.Component {
                                 aria-expanded="true" aria-controls="collapseTwo">
                                 <i className="fas fa-fw fa-cog"></i>
                                 {/* <select>Projects</select> */}
-                                <Projects onChangeProjId={this.handleChangeProj} projects={this.state.projects} loggedIn={true} />
+                                <Projects onChangeProjId={this.handleChangeProj} val={this.state.projectID} projects={this.state.projects} loggedIn={true} />
                             </a>
                             <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                                 <div className="bg-white py-2 collapse-inner rounded">

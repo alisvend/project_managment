@@ -44,6 +44,10 @@ class User extends Authenticatable
         $this->hasManyThrough(reply::class, issue::class);
     }
 
+
+   
+
+    
     /**
      * The attributes that are mass assignable.
      *
