@@ -16,60 +16,86 @@ export default class Project extends React.Component {
 
         this.props.onAddMilestone();
     }
+
+    deleteMilestone=(id)=>{
+
+        window.confirm("Are you sure you want to delete this milestone?")
+        apiClient.get('sanctum/csrf-cookie')
+        .then(() => apiClient.post('/api/deleteMilestone',{milestone_id:id}));
+                           
+                   this.props.onDeleteMilestone();      
+            
+    }
+
+    handleDeleteProject=(id)=>{
+        window.confirm("Are you sure you want to delete this project?")
+        apiClient.get('sanctum/csrf-cookie')
+        .then(() => apiClient.post('/api/deleteProject',{project_id:id}));
+                           
+                   this.props.onDeleteProject();   
+
+    }
     render() {
         let status = "";
         return (
             <>
 
 
+
+
                 <table className="table table-striped tableLeft">
                     <thead className='thead-dark'>
                         <tr>
-                        
-                                        <th>
-                                          Project Name
+
+                            <th>
+                                Project Name
+                                 </th>
+                            <th>
+                                Deadline
                                         </th>
-                                        <th>
-                                            Deadline
-                                        </th>
-                                        <th>
-                                          Status
-                                    </th>
+                            <th>
+                                Status
+                                </th>
                         </tr>
-                       
+
                     </thead>
                     <tbody className="">
-                    <tr>
+                        <tr>
 
 
 
-{this.props.projects.map((project) => {
-    if (project.id == this.props.projectID) {
-        console.log(project);
-        if(project.status==0){
-           status = "In Progress";
-                }else{ status = "Finished";}
+                            {this.props.projects.map((project) => {
+                                if (project.id == this.props.projectID) {
+                                    console.log(project);
+                                    if (project.status == 0) {
+                                        status = "In Progress";
+                                    } else { status = "Finished"; }
 
-        return (<>
-            <th>
-                {project.projectName}
-            </th>
-            <th>
-                {project.deadline}
-            </th>
-            <th>
-                {status}
-        </th></>
-        );
-    }
-})}
+                                    return (<>
+                                        <th>
+                                            {project.projectName} 
+                                        </th>
+                                        <th>
+                                            {project.deadline}
+                                        </th>
+                                        <th>
+                                            {status} <button onClick={(e)=>{this.handleDeleteProject(this.props.projectID)}}>Delete</button> 
+                                        </th></>
+                                    );
+                                }
+                            })}
 
-
-</tr>
+                                
+                        </tr>
+                        <tr className='thead-dark'>
+                            <th>Milestones</th>
+                            <th style={{textAlign:"center"}} colSpan="2">Tasks</th>
+                            </tr>
                         {this.props.milestone.map((milestones) => {
                             return (
                                 <tr key={milestones.id}>
-                                    <td>{milestones.name}</td>
+                                    
+                                    <td>{milestones.name}<button onClick={(e)=>{this.deleteMilestone(milestones.id)}}>Delete</button></td>
                                     <td colSpan="2"><Task id={milestones.id} /></td>
 
                                 </tr>

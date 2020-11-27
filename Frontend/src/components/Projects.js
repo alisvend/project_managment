@@ -11,7 +11,7 @@ const Projects = (props) => {
         return (
 
             <select className="custom-select" onChange={(e) => { props.onChangeProjId(e.target.value) }} >
-                <option value={0}>Show Projects</option>{projectList}
+                <option value={null}>Show Projects</option>{projectList}
             </select>
         );
     }
