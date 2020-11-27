@@ -21,12 +21,16 @@ const Register= (props) => {
                 email: email,
                 password: password,
                 password_confirmation:password_confirmation,
-                role: 'admin'
+                role: 'admin',
+                manager_id:null
             }).then(response=>{ if (response.status === 201) {
                             props.login();
                             setToHome(true);
                             sessionStorage.setItem('loggedIn', true);
-                           axios.get('api/user',{}).then(response=> {sessionStorage.setItem('role', response.data.role);});
+                axios.get('api/user', {}).then(response => {
+                    sessionStorage.setItem('role', response.data.role);
+                    sessionStorage.setItem('userId', response.data.id);
+                });
                         }});
         });
 

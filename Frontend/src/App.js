@@ -4,9 +4,17 @@ import Login from './components/login';
 
 import Register from './components/Register';
 import axios from 'axios';
-import Projects from './components/Projects';
+import EmpSidebar from './components/EmpSidebar';
 import Sidebar from './components/Sidebar';
 const App = () => {
+  const checkRole = () => {
+    const role = sessionStorage.getItem('role');
+    if (role === "admin") {
+      
+    }
+  };
+
+
   const [loggedIn, setLoggedIn] = React.useState(
     sessionStorage.getItem('loggedIn') === 'true' || false
   );
@@ -34,35 +42,27 @@ const App = () => {
   return (
     
     <Router>
-      {/* <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav">
-
-            <li className="nav-item">
-              <NavLink to='/projects' className="nav-link"><h4>Projects</h4></NavLink>
-            </li>
-            
-            <li className="nav-item">
-              {authLink}
-            </li>
-            <li className="nav-item">
-              {regLink}
-            </li>
-          </ul>
-        </div>
-      </nav> */}
-      <Sidebar/>
-      <div className=" mt-5 pt-5" >
+    
+     
+      <>
         <Switch>
 
+        <Route exact path='/' render={props => (
+            <Login {...props} login={login} />
+          )} />
           <Route path='/login' render={props => (
             <Login {...props} login={login} />
           )} />
           <Route path='/register' render={props => (
             <Register {...props} login={login} />
           )} />
-          <Route path='/projects' render={props => (
-            <Projects {...props} loggedIn={loggedIn} />
+          <Route path='/adminView' render={props => (
+            <Sidebar {...props} login={login}/>
+          
+          )} />
+           <Route path='/employeeView' render={props => (
+          <EmpSidebar {...props} login={login} />
+           
           )} />
           {/* <Route path='/categories' render={props => (
             <Categories {...props} loggedIn={loggedIn} />
@@ -75,7 +75,7 @@ const App = () => {
             <EditForm {...props} loggedIn={loggedIn} />
           )} /> */}
         </Switch>
-      </div>
+      </>
     </Router>
   );
 };
