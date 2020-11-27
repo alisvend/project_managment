@@ -1,6 +1,7 @@
 import React from 'react';
 import apiClient from '../services/api';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import NewTask from './NewTask';
 
 
 export default class Task extends React.Component {
@@ -39,6 +40,11 @@ handleDeleteTask=(id)=>{
                 
 }
 
+handleAddTask=()=>{
+
+this.fetchTasks();
+}
+
     render(){
       
         return(
@@ -64,7 +70,7 @@ handleDeleteTask=(id)=>{
                                            </div>
                                               )})}
 
-<button className="plus radius" style={{marginRight:"1em",float:"right"}}></button>
+<NewTask id={this.props.id} onAddTask={this.handleAddTask}/>
 </div>
 
 

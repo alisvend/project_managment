@@ -70,23 +70,23 @@ class ManagerController extends Controller
         $task = new Task();
         $task->user_id = Auth::id();
         $task->milestone_id = $request->get('milestoneID');
-        $task->name = $request->get('taskName');
+        $task->taskName = $request->get('taskName');
         $task->percentage = $request->get('percentage');
         $task->save();
     }
 
-    public function displayEmployees()
+    public function getEmployeesByManager()
     {
 
-        $employees = User::where('user_id', Auth::id());
+        $employees = User::where('user_id', Auth::id())->latest()->simplePaginate(1000);
         return $employees;
     }
 
     public function deleteProject(Request $request)
     {   
         if ($request->user()->is_admin()) {
-            $project = Project::where('project_id', $request->get('projectID'));
-            $project->delete;
+            $project = Project::where('id', $request->get('project_id'));
+            $project->delete();
         } else {
             return $data['message'] = 'You have no sufficient permissions';
         }
@@ -104,8 +104,8 @@ class ManagerController extends Controller
     public function deleteMilestone(Request $request)
     {   
         if ($request->user()->is_admin()) {
-            $milestone = Milestone::where('milestone_id', $request->get('milestone_id'));
-            $milestone->delete;
+            $milestone = Milestone::where('id', $request->get('milestone_id'));
+            $milestone->delete();
         } else {
             return $data['message'] = 'You have no sufficient permissions';
         }
