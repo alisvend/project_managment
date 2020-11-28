@@ -136,7 +136,7 @@ export default class Sidebar extends React.Component {
                         <li className="nav-item">
                             <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                                 aria-expanded="true" aria-controls="collapseTwo">
-                                <i className="fas fa-fw fa-cog"></i>
+                                <i className=""></i>
                                 {/* <select>Projects</select> */}
                                 <Projects onChangeProjId={this.handleChangeProj} val={this.state.projectID} projects={this.state.projects} loggedIn={true} />
                             </a>
@@ -151,7 +151,7 @@ export default class Sidebar extends React.Component {
                         <li className="nav-item">
                             <a className="nav-link collapsed" onClick={this.handleAddEmployee} data-toggle="collapse" data-target="#collapseTwo"
                                 aria-expanded="true" aria-controls="collapseTwo">
-                                <i className="fas fa-fw fa-cog"></i>
+                                <i className=""></i>
                                 <span>Add Employee</span>
                             </a>
                             <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -179,7 +179,7 @@ export default class Sidebar extends React.Component {
                         <li className="nav-item">
                             <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                                 aria-expanded="true" aria-controls="collapsePages">
-                                <i className="fas fa-fw fa-folder"></i>
+                                <i className=""></i>
                                 <span>Pages</span>
                             </a>
                             <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -206,7 +206,7 @@ export default class Sidebar extends React.Component {
 
                         <li className="nav-item">
                             <a onClick={this.logout} className="nav-link">
-                                <i className="fas fa-fw fa-table"></i>
+                                <i className=""></i>
                                 <span>Logout</span></a>
                         </li>
 
@@ -241,7 +241,7 @@ export default class Sidebar extends React.Component {
                                             aria-label="Search" aria-describedby="basic-addon2" />
                                         <div className="input-group-append">
                                             <button className="btn btn-primary" type="button">
-                                                <i className="fas fa-search fa-sm"></i>
+                                                <i className="fa fa-search"></i>
                                             </button>
                                         </div>
                                     </div>

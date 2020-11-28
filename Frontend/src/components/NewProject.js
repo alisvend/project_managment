@@ -45,7 +45,7 @@ export default function FormDialog(props) {
       <div>
            <a className="nav-link collapsed" onClick={handleClickOpen} data-toggle="collapse" data-target="#collapseUtilities"
                                 aria-expanded="true" aria-controls="collapseUtilities">
-                                <i className="fas fa-fw fa-wrench"></i>
+                                <i className=""></i>
                                 <span> New Project</span>
                             </a>
                             <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities"

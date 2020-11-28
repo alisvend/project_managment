@@ -68,7 +68,7 @@ class ManagerController extends Controller
     public function storeTask(Request $request)
     {
         $task = new Task();
-        $task->user_id=$request->get('user_id');
+        $task->user_id = $request->get('user_id');
         $task->milestone_id = $request->get('milestoneID');
         $task->taskName = $request->get('taskName');
         $task->save();

@@ -49,7 +49,7 @@ export default function NewMilestone(props) {
                 ADD MILESTONE
       </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">New Project</DialogTitle>
+                <DialogTitle id="form-dialog-title">New Milestone</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Start managing your project effectively
