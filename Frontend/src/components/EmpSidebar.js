@@ -86,11 +86,11 @@ export default class EmpSidebar extends React.Component {
         }
     }
 
-    handleFetchTask=()=>{
+    // handleFetchTask=()=>{
 
-        this.fetchProjects();
+    //     this.fetchProjects();
         
-    }
+    // }
     render() {
 
         if (!this.state.navigate) {
@@ -438,7 +438,7 @@ export default class EmpSidebar extends React.Component {
                                          milestone={this.state.milestones} 
                                          projects={this.state.projects} 
                                          projectID={this.state.projectID} 
-                                         onToggleStatus={this.handleFetchTask()}
+                                        //  onToggleStatus={this.handleFetchTask()}
                                          />) : (
                                         <></>
                                     )

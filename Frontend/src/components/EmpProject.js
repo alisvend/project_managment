@@ -16,10 +16,10 @@ export default class EmpProject extends React.Component {
 
     
 
-    handleToggleStatus=()=>{
-        this.props.onToggleStatus();
+    // handleToggleStatus=()=>{
+    //     this.props.onToggleStatus();
 
-    }
+    // }
   
     render() {
         let status = "";
@@ -84,7 +84,7 @@ export default class EmpProject extends React.Component {
                                 <tr key={milestones.id}>
                                     
                                     <td>{milestones.name}</td>
-                                    <td colSpan="2"><EmpTask id={milestones.id} pId={this.props.projectID} toggleStatus={this.handleToggleStatus()} /></td>
+                                    <td colSpan="2"><EmpTask id={milestones.id} pId={this.props.projectID}  /></td>
 
                                 </tr>
                             )
