@@ -3,7 +3,8 @@ import apiClient from '../services/api';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Task from './Task';
 import NewMilestone from "./NewMilestone";
-
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 export default class Project extends React.Component {
     constructor(props) {
         super(props);
@@ -18,8 +19,19 @@ export default class Project extends React.Component {
     }
 
     deleteMilestone=(id)=>{
-
-        window.confirm("Are you sure you want to delete this milestone?")
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure you want to delete this milestone?',
+            buttons: [
+              {
+                label: 'Yes'
+              },
+              {
+                label: 'No'
+              }
+            ]
+          })
+        //window.confirm("Are you sure you want to delete this milestone?")
         apiClient.get('sanctum/csrf-cookie')
         .then(() => apiClient.post('/api/deleteMilestone',{milestone_id:id}));
                            
@@ -28,7 +40,19 @@ export default class Project extends React.Component {
     }
 
     handleDeleteProject=(id)=>{
-        window.confirm("Are you sure you want to delete this project?")
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure you want to delete this project?',
+            buttons: [
+              {
+                label: 'Yes'
+              },
+              {
+                label: 'No'
+              }
+            ]
+          })
+        //window.confirm("Are you sure you want to delete this project?")
         apiClient.get('sanctum/csrf-cookie')
         .then(() => apiClient.post('/api/deleteProject',{project_id:id}));
                            
@@ -56,6 +80,7 @@ export default class Project extends React.Component {
                             <th>
                                 Status
                                 </th>
+                                <th></th>
                         </tr>
 
                     </thead>
@@ -79,8 +104,13 @@ export default class Project extends React.Component {
                                             {project.deadline}
                                         </th>
                                         <th>
-                                            {status} <button onClick={(e)=>{this.handleDeleteProject(this.props.projectID)}}>Delete</button> 
-                                        </th></>
+                                            {status} 
+                                        </th>
+                                        <th><div className="section">  <span className="trash" onClick={(e)=>{this.handleDeleteProject(this.props.projectID)}}>Delete
+                                                                <span></span>
+                                                                <i></i>
+                                                                </span>
+                                                              </div></th></>
                                     );
                                 }
                             })}
@@ -89,14 +119,37 @@ export default class Project extends React.Component {
                         </tr>
                         <tr className='thead-dark'>
                             <th>Milestones</th>
+                            <th></th>
                             <th style={{textAlign:"center"}} colSpan="2">Tasks</th>
                             </tr>
-                        {this.props.milestone.map((milestones) => {
+                        {this.props.milestone.map((milestones) => { let done="card border-left-sec shadow h-100 py-2"
+                            if(milestones.status){  done="card border-left-prim shadow h-100 py-2"}
                             return (
                                 <tr key={milestones.id}>
                                     
-                                    <td>{milestones.name}<button onClick={(e)=>{this.deleteMilestone(milestones.id)}}>Delete</button></td>
-                                    <td colSpan="2"><Task id={milestones.id} /></td>
+                                  
+                                    <td style={{height:"100%"}}colSpan="2">
+                                        <div className="col">
+                                                <div className={done}>
+                                                    <div className="card-body">
+                                                        <div className="row no-gutters align-items-center" >
+                                                            {/* <div className="col mr-2"> */}
+                                                           <div className="col mr-2  m-0 font-weigt-bold text-primary text-uppercase mb-2"> {milestones.name}</div>
+                                                           <div className="col mr-2  m-0 font-weigt-bold text-primary text-uppercase mb-2"> {milestones.id}</div>
+                                                           <div className="col mr-2   m-0 font-weigt-bold text-primary text-uppercase mb-2"> {milestones.status}</div>
+                                                            <div className="col mr-2">
+                                                              <div className="section">  <span className="trash" onClick={(e)=>{this.deleteMilestone(milestones.id)}}>Delete
+                                                                <span></span>
+                                                                <i></i>
+                                                                </span>
+                                                              </div>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </td>
+                                    <td style={{height:"80px"}} colSpan="2"><div ><Task id={milestones.id} /></div></td>
 
                                 </tr>
                             )

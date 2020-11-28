@@ -10,14 +10,15 @@ const Projects = (props) => {
     if (props.loggedIn) {
         if (props.val === null) {
             return (
-
-                <select value={null}selected className="custom-select" onChange={(e) => { props.onChangeProjId(e.target.value) }} >
-                    <option value={null}selected >Show Projects</option>{projectList}
+                
+                <select value={null} placeholder="Show Projects" selected className="custom-select" onChange={(e) => { props.onChangeProjId(e.target.value) }} >
+                    <option value={null}selected hidden>Show Projects</option>{projectList}
                 </select>
+        
             );
         }else{ return(
-            <select className="custom-select" onChange={(e) => { props.onChangeProjId(e.target.value) }} >
-                    <option value={null}>Show Projects</option>{projectList}
+            <select className="custom-select" placeholder="Show Projects" onChange={(e) => { props.onChangeProjId(e.target.value) }} >
+                    <option value={null} hidden>Show Projects</option>{projectList}
                 </select>
         )
         }

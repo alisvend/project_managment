@@ -47,12 +47,14 @@ this.fetchTasks();
 
     render(){
       
-        return(
-<div   classsName="row"   >
-{this.state.tasks.map((tasks) => {
+        return(<>
+<div   classsName="row"  style={{overflow:"auto",height:"80px"}} >
+{this.state.tasks.map((tasks) => { let done="card border-left-secondary shadow h-100 py-2"
+    if(tasks.status){ done="card border-left-primary shadow h-100 py-2"}
                                         return (
                                             <div className="col">
-                                                <div className="card border-left-primary shadow h-100 py-2">
+                                                
+                                                <div className={done}>
                                                 <div className="card-body">
                                                         <div className="row no-gutters align-items-center" >
                                                             {/* <div className="col mr-2"> */}
@@ -68,12 +70,17 @@ this.fetchTasks();
                                                         </div>
                                                     </div> </div></div>
                                            </div>
-                                              )})}
+                                              )
+                                            
+                                         }  )}
+                                        
 
-<NewTask id={this.props.id} onAddTask={this.handleAddTask}/>
+                                              
+
+
 </div>
-
-
+<NewTask id={this.props.id} onAddTask={this.handleAddTask}/>
+</>
 
         )
     }
