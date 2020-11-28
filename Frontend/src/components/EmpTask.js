@@ -9,6 +9,7 @@ export default class EmpTask extends React.Component {
         super(props);
         this.state = {
             tasks: [],
+            status:false,
         };
     }
 
@@ -16,7 +17,7 @@ export default class EmpTask extends React.Component {
 
     fetchTasks() {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/tasks', { milestoneID: this.props.id })
+            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/employeeTasks', { milestoneID: this.props.id })
                 .then(response => {
                     const tasks = response.data;
                     this.setState({ tasks: tasks });
@@ -28,17 +29,43 @@ export default class EmpTask extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.fetchTasks();
+    setStatus(stat,taskID){
+        if (sessionStorage.getItem('loggedIn')) {
+            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/setStatus', {
+                 status: stat,
+                  id:taskID,
+                   milestoneID:this.props.id,
+                projectID:this.props.pId })
+                
+                .catch(error => console.error(error)
+                ))
+
+        }
+
+
+
     }
 
+    componentDidMount() {
+        this.fetchTasks();
+        
+    }
 
+    handleInputChange=(event,id)=> {
+        
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        this.setStatus(value,id);
+       // this.fetchTasks();
+        this.props.toggleStatus();
+
+      }
 
 
     render() {
 
         return (
-            <div classsName="row"   >
+            <div classsName="row">
                 {this.state.tasks.map((tasks) => {
                     return (
                         <div className="col">
@@ -47,14 +74,14 @@ export default class EmpTask extends React.Component {
                                     <div className="row no-gutters align-items-center" >
                                         {/* <div className="col mr-2"> */}
                                         <div className="col mr-2  m-0 font-weigt-bold text-primary text-uppercase mb-2"> {tasks.taskName}</div>
-                                        <div className="col mr-2  m-0 font-weigt-bold text-primary text-uppercase mb-2"> {tasks.employee.name}</div>
+                                        {/* <div className="col mr-2  m-0 font-weigt-bold text-primary text-uppercase mb-2"> {tasks.employee.name}</div> */}
                                         <div className="col mr-2   m-0 font-weigt-bold text-primary text-uppercase mb-2"> {tasks.percentage}</div>
                                         <div className="col mr-2">
-                                            <div className="section">  <span className="trash" onClick={() => { this.handleDeleteTask(tasks.id) }}>Delete
-                                                                <span></span>
-                                                <i></i>
-                                            </span>
-                                            </div>
+                                        <input
+            name="status"
+            type="checkbox"
+            checked={tasks.status}
+            onChange={(e)=>{this.handleInputChange(e,tasks.id)} }/>
                                         </div>
                                     </div> </div></div>
                         </div>

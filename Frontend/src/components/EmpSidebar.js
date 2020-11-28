@@ -5,6 +5,9 @@ import Projects from './Projects';
 import Project from './Project';
 import Task from './Task';
 import axios from "axios";
+import EmpProjects from './EmpProjects';
+import EmpProject from './EmpProject';
+
 export default class EmpSidebar extends React.Component {
     constructor(props) {
         super(props);
@@ -31,7 +34,7 @@ export default class EmpSidebar extends React.Component {
 
 
       projectexists() {
-        console.log(this.state.projectID != null, "result");
+        
         if (this.state.projectID != null) {
             return true;
 
@@ -43,17 +46,25 @@ export default class EmpSidebar extends React.Component {
         if (sessionStorage.getItem('loggedIn')) {
             apiClient.get('sanctum/csrf-cookie').then(() => apiClient.get('/api/employeeProjects')
                 .then(response => {
-                    this.setState({ projects: response.data.data })
+                    this.setState({ projects: response.data })
+                   
                 })
                 .catch(error => console.error(error)))
 
         }
+     
+  
     }
+
+    
+
+    
 
     componentDidMount(){
         this.fetchProjects();
-
+  
     }
+
     handleChangeProj = (id) => {
         this.fetchMilestones();
         this.setState({ projectID: id });
@@ -63,7 +74,7 @@ export default class EmpSidebar extends React.Component {
 
     fetchMilestones() {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/milestones', { projectID: this.state.projectID })
+            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/employeeMilestones', { projectID: this.state.projectID })
                 .then(response => {
                     const milestones = response.data;
                     this.setState({ milestones: milestones });
@@ -73,6 +84,12 @@ export default class EmpSidebar extends React.Component {
                 ))
 
         }
+    }
+
+    handleFetchTask=()=>{
+
+        this.fetchProjects();
+        
     }
     render() {
 
@@ -122,7 +139,7 @@ export default class EmpSidebar extends React.Component {
                             aria-expanded="true" aria-controls="collapseTwo">
                             <i className="fas fa-fw fa-cog"></i>
                             {/* <select>Projects</select> */}
-                            {/* <Projects onChangeProjId={this.handleChangeProj} val={this.state.projectID} projects={this.state.projects} loggedIn={true} /> */}
+                            <EmpProjects onChangeProjId={this.handleChangeProj} val={this.state.projectID} projects={this.state.projects} loggedIn={true} />
                         </a>
                         <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                             <div className="bg-white py-2 collapse-inner rounded">
@@ -417,10 +434,12 @@ export default class EmpSidebar extends React.Component {
 
                         <div className="container-fluid">
                         {
-                                    this.projectexists() ? (<Project 
+                                    this.projectexists() ? (<EmpProject 
                                          milestone={this.state.milestones} 
                                          projects={this.state.projects} 
-                                         projectID={this.state.projectID} />) : (
+                                         projectID={this.state.projectID} 
+                                         onToggleStatus={this.handleFetchTask()}
+                                         />) : (
                                         <></>
                                     )
                                 }

@@ -33,3 +33,6 @@ Route::middleware('auth:sanctum')->get('/getEmployees', [ManagerController::clas
 Route::middleware('auth:sanctum')->post('/deleteMilestone', [ManagerController::class,'deleteMilestone']);
 Route::middleware('auth:sanctum')->post('/deleteProject', [ManagerController::class,'deleteProject']);
 Route::middleware('auth:sanctum')->get('/employeeProjects', [EmployeeController::class,'getEmployeeProjects']);
+Route::middleware('auth:sanctum')->post('/employeeMilestones', [EmployeeController::class,'getEmployeeMilestones']);
+Route::middleware('auth:sanctum')->post('/employeeTasks', [EmployeeController::class,'getEmployeeTasks']);
+Route::middleware('auth:sanctum')->post('/setStatus', [EmployeeController::class,'setStatus']);

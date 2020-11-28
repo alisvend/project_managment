@@ -1,10 +1,11 @@
 import React from 'react';
 import apiClient from '../services/api';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Task from './Task';
+import EmpTask from './EmpTask';
 import NewMilestone from "./NewMilestone";
+import Projects from './Projects';
 
-export default class Project extends React.Component {
+export default class EmpProject extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,9 +13,18 @@ export default class Project extends React.Component {
 
         };
     }
+
+    
+
+    handleToggleStatus=()=>{
+        this.props.onToggleStatus();
+
+    }
   
     render() {
         let status = "";
+
+       
         return (
             <>
 
@@ -44,7 +54,7 @@ export default class Project extends React.Component {
 
                             {this.props.projects.map((project) => {
                                 if (project.id == this.props.projectID) {
-                                    console.log(project);
+                                   
                                     if (project.status == 0) {
                                         status = "In Progress";
                                     } else { status = "Finished"; }
@@ -74,7 +84,7 @@ export default class Project extends React.Component {
                                 <tr key={milestones.id}>
                                     
                                     <td>{milestones.name}</td>
-                                    <td colSpan="2"><EmpTask id={milestones.id} /></td>
+                                    <td colSpan="2"><EmpTask id={milestones.id} pId={this.props.projectID} toggleStatus={this.handleToggleStatus()} /></td>
 
                                 </tr>
                             )
