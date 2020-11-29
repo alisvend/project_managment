@@ -33,9 +33,10 @@ export default class Task extends React.Component {
             }
 handleDeleteTask=(id)=>{
     apiClient.get('sanctum/csrf-cookie')
-    .then(() => apiClient.post('/api/deleteTask',{taskId:id}));
-                       
-          this.fetchTasks();             
+    .then(() => apiClient.post('/api/deleteTask',{taskId:id,milestoneID:this.props.id,projectID:this.props.projectID}));
+    console.log(this.props.id,"propsID");           
+          this.fetchTasks();  
+          this.props.onDeleteTask();         
         
                 
 }
@@ -43,6 +44,8 @@ handleDeleteTask=(id)=>{
 handleAddTask=()=>{
 
 this.fetchTasks();
+this.props.onAddTask();
+
 }
 
     render(){
@@ -79,7 +82,7 @@ this.fetchTasks();
 
 
 </div>
-<NewTask id={this.props.id} onAddTask={this.handleAddTask}/>
+<NewTask projectID={this.props.projectID} id={this.props.id} onAddTask={this.handleAddTask}/>
 </>
 
         )

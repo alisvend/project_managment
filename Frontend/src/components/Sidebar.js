@@ -59,6 +59,7 @@ export default class Sidebar extends React.Component {
     handleAddMile = () => {
        
         this.fetchMilestones();
+        this.fetchProjects();
     }
     componentDidMount = () => {
         this.fetchProjects();

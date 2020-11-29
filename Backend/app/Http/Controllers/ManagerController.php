@@ -21,8 +21,9 @@ class ManagerController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
             'user_id' => $request->manager_id,
-            
-        ]);}
+
+        ]);
+    }
 
 
     public function displayProject()
@@ -34,14 +35,14 @@ class ManagerController extends Controller
 
     public function displayMilestone(Request $request)
     {
-        $pid=$request->projectID;
+        $pid = $request->projectID;
         $milestones = Milestone::where('project_id', $pid)->get();
         return $milestones;
     }
 
     public function displayTask(Request $request)
     {
-       
+
         $tasks = Task::where('milestone_id', $request->milestoneID)->with('employee')->get();
         return $tasks;
     }
@@ -63,6 +64,8 @@ class ManagerController extends Controller
         $milestone->name = $request->get('milestoneName');
         $milestone->deadline = $request->get('deadline');
         $milestone->save();
+
+        $this->updateStat($request);
     }
 
     public function storeTask(Request $request)
@@ -72,6 +75,8 @@ class ManagerController extends Controller
         $task->milestone_id = $request->get('milestoneID');
         $task->taskName = $request->get('taskName');
         $task->save();
+
+        $this->updateStat($request);
     }
 
     public function getEmployeesByManager()
@@ -82,7 +87,7 @@ class ManagerController extends Controller
     }
 
     public function deleteProject(Request $request)
-    {   
+    {
         if ($request->user()->is_admin()) {
             $project = Project::where('id', $request->get('project_id'));
             $project->delete();
@@ -92,33 +97,36 @@ class ManagerController extends Controller
     }
 
     public function deleteTask(Request $request)
-    {   
-        if ($request->user()->is_admin()) {
-            $task = Task::where('id', $request->get('taskId'));
-            $task->delete();
-        } else {
-            return $data['message'] = 'You have no sufficient permissions';
-        }
+    {
+
+        $task = Task::where('id', $request->get('taskId'));
+        $task->delete();
+
+        $this->updateStat($request);
     }
     public function deleteMilestone(Request $request)
-    {   
+    {
         if ($request->user()->is_admin()) {
             $milestone = Milestone::where('id', $request->get('milestone_id'));
             $milestone->delete();
+            $this->updateStat($request);
         } else {
             return $data['message'] = 'You have no sufficient permissions';
         }
+
+       
     }
 
-public function userSignUp(Request $request){
-        $validator = Validator::make($request->all(),[
+    public function userSignUp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             "name" => "required",
             "email" => "required|email",
             "password" => "required",
-            
+
         ]);
-        if($validator->fails()){
-            return response()->json(["status"=>"failed","message"=>"validation_error","errors"=>$validator->errors()]);
+        if ($validator->fails()) {
+            return response()->json(["status" => "failed", "message" => "validation_error", "errors" => $validator->errors()]);
         }
         //$name = $request->name;
         $userDataArray = array(
@@ -127,18 +135,54 @@ public function userSignUp(Request $request){
             'password' => Hash::make($request->password),
             'role' => $request->role,
             'user_id' => $request->manager_id,
-            
+
         );
-        $user_status = User::where("email",$request->email)->first();
-        if(!is_null($user_status)){
-            return response()->json(["status"=>"failed","success"=>false,"message" => "Email is already registered"]);
+        $user_status = User::where("email", $request->email)->first();
+        if (!is_null($user_status)) {
+            return response()->json(["status" => "failed", "success" => false, "message" => "Email is already registered"]);
         }
         $user = User::create($userDataArray);
-        if(!is_null($user)){
-            return response()->json(["status" => $this->status_code,"success"=>true,"message"=>"Registration completed successfully","data" => $user]);
+        if (!is_null($user)) {
+            return response()->json(["status" => $this->status_code, "success" => true, "message" => "Registration completed successfully", "data" => $user]);
+        } else {
+            return response()->json(["status" => "failed", "success" => false, "message" => "failed to register"]);
         }
-        else{
-            return response()->json(["status"=>"failed","success"=>false,"message"=>"failed to register"]);
+    }
+
+    public static function updateStat(Request $request)
+    {
+
+        $tasks = Task::where('milestone_id', $request->get('milestoneID'))->get();
+        $test = true;
+        foreach ($tasks as $item) {
+            if (!$item['status']) {
+                $test = false;
+                break;
+            }
         }
-}
+
+        if ($test === true) {
+            Milestone::where('id', $request->get('milestoneID'))
+                ->update(['status' => true]);
+        } else {
+            Milestone::where('id', $request->get('milestoneID'))
+                ->update(['status' => false]);
+        }
+
+        $milestones = Milestone::where('project_id', $request->get('projectID'))->get();
+        $test = true;
+        foreach ($milestones as $item) {
+            if (!$item['status']) {
+                $test = false;
+                break;
+            }
+        }
+        if ($test === true) {
+            Project::where('id', $request->get('projectID'))
+                ->update(['status' => true]);
+        } else {
+            Project::where('id', $request->get('projectID'))
+                ->update(['status' => false]);
+        }
+    }
 }

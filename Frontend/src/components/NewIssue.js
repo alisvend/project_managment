@@ -33,7 +33,7 @@ export default function NewIssue(props) {
   const handleSubmit = () => {
       setOpen(false);
       addIssue();
-    //   props.onAddProj();
+      props.onAddIssue();
   };
   return (
       <div>

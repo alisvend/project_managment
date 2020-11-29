@@ -57,6 +57,8 @@ export default class EmpTask extends React.Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         this.setStatus(value,id);
         this.fetchTasks();
+        console.log(this.props,"propssss");
+        this.props.onToggleStatus();
        // this.props.toggleStatus();
 
       }

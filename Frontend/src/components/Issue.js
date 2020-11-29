@@ -29,6 +29,11 @@ export default class Issue extends React.Component {
         }
     }
 
+    handleAddIssue=()=>{
+
+        this.fetchIssues();
+    }
+
    
 
     componentDidMount() {
@@ -49,7 +54,7 @@ export default class Issue extends React.Component {
         console.log(this.state.replies,"replies");
         return (<>
 
-            <div><NewIssue /></div>
+            <div><NewIssue onAddIssue={this.handleAddIssue} /></div>
             <div classsName="row">
 
                 {this.state.issues.map((issues) => {
