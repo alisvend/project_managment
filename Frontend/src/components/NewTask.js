@@ -31,6 +31,7 @@ export default function NewTask(props) {
 
                         milestoneID: props.id,
                         user_id: eid,
+                        projectID:props.projectID,
                     })
 
                     .catch(error => console.error(error)

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Project;
 use App\Models\Milestone;
 use App\Models\Task;
+use App\Http\Controllers\ManagerController;
 
 class EmployeeController extends Controller
 {
@@ -29,14 +30,14 @@ class EmployeeController extends Controller
                 array_push($arr, $item['milestone_id']);
             }
         }
-        $projectIds = Milestone::where("id", $arr)->get();
+        $projectIds = Milestone::whereIn("id", $arr)->get();
         $arr2 = [];
         foreach ($projectIds as $item) {
             if (!in_array($item['project_id'], $arr2)) {
                 array_push($arr2, $item['project_id']);
             }
         }
-        $projects = Project::where("id", $arr2)->get();
+        $projects = Project::whereIn("id", $arr2)->get();
         return $projects;
     }
 
@@ -51,7 +52,7 @@ class EmployeeController extends Controller
                 array_push($arr, $item['milestone_id']);
             }
         }
-        $Milestone = Milestone::where("id", $arr)->get();
+        $Milestone = Milestone::whereIn("id", $arr)->get();
         return $Milestone;
     }
 
@@ -70,39 +71,6 @@ class EmployeeController extends Controller
             ->where('user_id', Auth::id())
             ->update(['status' => $request->get('status')]);
 
-        $tasks = Task::where('milestone_id', $request->get('milestoneID'))->get();
-        $test = true;
-        foreach ($tasks as $item) {
-            if (!$item['status']) {
-                $test = false;
-            break;
-            } 
-        }
-
-        if($test===true){
-            Milestone::where('id', $request->get('milestoneID'))
-            ->update(['status' => true]);
-        }else{
-            Milestone::where('id', $request->get('milestoneID'))
-            ->update(['status' => false]);
-
-        }
-
-        $milestones = Milestone::where('project_id', $request->get('projectID'))->get();
-        $test = true;
-        foreach ($milestones as $item) {
-            if (!$item['status']) {
-                $test = false;
-            break;
-            } 
-        }
-        if($test===true){
-            Project::where('id', $request->get('projectID'))
-            ->update(['status' => true]);
-        }else{
-            Project::where('id', $request->get('projectID'))
-            ->update(['status' => false]);
-
-        }
+        ManagerController::updateStat($request);
     }
 }

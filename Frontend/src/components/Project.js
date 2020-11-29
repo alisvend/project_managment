@@ -25,7 +25,7 @@ export default class Project extends React.Component {
             buttons: [
               {
                 label: 'Yes', onClick:()=>{apiClient.get('sanctum/csrf-cookie')
-                .then(() => apiClient.post('/api/deleteMilestone',{milestone_id:id}));
+                .then(() => apiClient.post('/api/deleteMilestone',{milestone_id:id,projectID:this.props.projectID}));
                                    
                            this.props.onDeleteMilestone(); }
               },
@@ -57,6 +57,16 @@ export default class Project extends React.Component {
           })
         //window.confirm("Are you sure you want to delete this project?")
        
+
+    }
+
+    handleAddTask=()=>{
+        this.handleAddMile();
+
+    }
+
+    handleDeleteTask=()=>{
+        this.handleAddMile();
 
     }
     render() {
@@ -149,7 +159,7 @@ export default class Project extends React.Component {
                                                 </div>
                                         </div>
                                     </td>
-                                    <td style={{height:"80px"}} colSpan="2"><div ><Task id={milestones.id} /></div></td>
+                                    <td style={{height:"80px"}} colSpan="2"><div ><Task projectID={this.props.projectID} id={milestones.id} onAddTask={this.handleAddTask} onDeleteTask={this.handleDeleteTask} /></div></td>
 
                                 </tr>
                             )

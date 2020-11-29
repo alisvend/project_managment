@@ -5,7 +5,7 @@ import apiClient from '../services/api';
 const EmployeeList = (props) => {
     // const list=[props.employees];
     const employees1 = props.employees.map((employee,index) =>
-        <option value={employee.id} key={employee.id} >{employee.id}{employee.name}</option>
+        <option value={employee.id} key={employee.id} >{employee.name}</option>
 
     );
     

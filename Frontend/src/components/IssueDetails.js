@@ -102,7 +102,7 @@ export default class IssueDetails extends React.Component {
     render() {
         console.log(this.state.issues, "anything");
         return (<>
-            <NavLink to="/adminView">Back To Home</NavLink>
+            
 
             {this.state.issues.map((issues) => {
                 return (

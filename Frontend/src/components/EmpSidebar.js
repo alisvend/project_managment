@@ -74,7 +74,7 @@ export default class EmpSidebar extends React.Component {
 
     fetchMilestones() {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/employeeMilestones', { projectID: this.state.projectID })
+            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/milestones', { projectID: this.state.projectID })
                 .then(response => {
                     const milestones = response.data;
                     this.setState({ milestones: milestones });
@@ -86,11 +86,11 @@ export default class EmpSidebar extends React.Component {
         }
     }
 
-    // handleFetchTask=()=>{
+    handleFetchTask=()=>{
 
-    //     this.fetchProjects();
+        this.fetchProjects();
         
-    // }
+    }
     render() {
 
         if (!this.state.navigate) {
@@ -435,10 +435,11 @@ export default class EmpSidebar extends React.Component {
                         <div className="container-fluid">
                         {
                                     this.projectexists() ? (<EmpProject 
+
                                          milestone={this.state.milestones} 
                                          projects={this.state.projects} 
                                          projectID={this.state.projectID} 
-                                        //  onToggleStatus={this.handleFetchTask()}
+                                         onToggleStat={this.handleFetchTask}
                                          />) : (
                                         <></>
                                     )
