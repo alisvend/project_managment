@@ -7,89 +7,62 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import apiClient from '../services/api';
-
-export default function NewTask1(props) {
-
+export default function NewIssue(props) {
     const [open, setOpen] = React.useState(false);
-    const [taskName, setName] = React.useState();
-    const [percentage, setPercentage] = React.useState();
-    const [eid, setEid] = React.useState();
-    const [employees, setEmployees] = React.useState();
-
-    React.useEffect(() => {
-       getEmployees();
-       console.log(employees,"eee");
-    }, []);
- const addTask = () => {
+    const [issueTitle, setTitle] = React.useState();
+    const [content, setContent] = React.useState();
+   
+ const addIssue = () => {
         if (sessionStorage.getItem('loggedIn')) {
             apiClient.get('sanctum/csrf-cookie')
-                .then(() => apiClient.post('/api/addTask',
+                .then(() => apiClient.post('/api/addIssue',
                     {
-                        taskName: taskName,
-                        percentage: percentage,
-                        eid:eid,
+                        title: issueTitle,
+                        issue: content,
                     })
-               
                     .catch(error => console.error(error)
                     ))
-
-        }
-    }
-
-    const getEmployees = () => {
-        if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie')
-                .then(() => apiClient.get('/api/getEmployees').then(response => {
-                    setEmployees( response.data )
-                })
-               
-                    .catch(error => console.error(error)
-                    ))
-
         }
     }
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
       setOpen(false);
-    
   };
   const handleSubmit = () => {
       setOpen(false);
-      addTask();
+      addIssue();
     //   props.onAddProj();
-      
   };
   return (
       <div>
             {/* <Button  onClick={handleClickOpen()} ></Button> */}
       <Button  onClick={handleClickOpen}>
-        New Project
+        New Issue
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">New Project</DialogTitle>
+        <DialogTitle id="form-dialog-title">New Issue</DialogTitle>
         <DialogContent>
           <DialogContentText>
-                     Start managing your project effectively
+                     Share your issue and get other's solutions :)
           </DialogContentText>
                   <TextField
-                     
+              onChange={(e) => { setTitle(e.target.value) }}
             autoFocus
             margin="dense"
             id="name"
-            label="Project Name"
+            label="Issue Title"
             type="text"
             fullWidth
           />
                   <TextField
-                     
+            onChange={(e) => { setContent(e.target.value) }}
             autoFocus
             margin="dense"
             id="name"
-            label="Deadline"
-            type="date"
+            label="State your Issue"
+            type="text"
             fullWidth
           />
         </DialogContent>

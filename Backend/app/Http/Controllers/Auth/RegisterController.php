@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -29,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-   // protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -49,33 +51,36 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $variable = "5B2ceQkc6Y3cPYJU";
         return Validator::make($data, [
+            'token' => [
+                'required',
+                Rule::in([$variable]),
+            ],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            
+
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
-     *
+     * $message['message']="shi";
+     *  if($data['token']==='5B2ceQkc6Y3cPYJU'){
      * @param  array  $data
      * @return \App\Models\User
      */
     protected function create(array $data)
     {
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password'],),
             'role' => $data['role'],
             'user_id' => $data['manager_id'],
-            
+
         ]);
-       
     }
-
-
-  
 }

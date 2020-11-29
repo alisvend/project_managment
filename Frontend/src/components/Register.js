@@ -10,6 +10,7 @@ const Register= (props) => {
     const [toHome, setToHome] = React.useState(false);
     const [authError, setAuthError] = React.useState(false);
     const [unknownError, setUnknownError] = React.useState(false);
+    const [token, setToken] = React.useState('');
     const handleSubmit = (e) => {
         e.preventDefault();
         setAuthError(false);
@@ -22,7 +23,8 @@ const Register= (props) => {
                 password: password,
                 password_confirmation:password_confirmation,
                 role: 'admin',
-                manager_id:null
+                manager_id:null,
+                token:token,
             }).then(response=>{ if (response.status === 201) {
                             props.login();
                             setToHome(true);
@@ -38,7 +40,7 @@ const Register= (props) => {
     
     }
     if (toHome === true) {
-        return <Redirect to='/projects' />
+        return <Redirect to='/adminView' />
     }
     const loginToaccount=()=>{
         props.history.push('/login');
@@ -101,6 +103,19 @@ const Register= (props) => {
                         placeholder="Password"
                         value={password_confirmation}
                         onChange={e => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                </div>
+
+                <div className="form-group">
+                    <input
+                        
+                        type="password"
+                        name="name"
+                        className={"form-control" + (authError || unknownError ? ' is-invalid' : '')}
+                        placeholder="token"
+                        value={token}
+                        onChange={e => setToken(e.target.value)}
                         required
                     />
                 </div>
