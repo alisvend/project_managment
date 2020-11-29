@@ -24,7 +24,10 @@ export default class Project extends React.Component {
             message: 'Are you sure you want to delete this milestone?',
             buttons: [
               {
-                label: 'Yes'
+                label: 'Yes', onClick:()=>{apiClient.get('sanctum/csrf-cookie')
+                .then(() => apiClient.post('/api/deleteMilestone',{milestone_id:id}));
+                                   
+                           this.props.onDeleteMilestone(); }
               },
               {
                 label: 'No'
@@ -32,10 +35,7 @@ export default class Project extends React.Component {
             ]
           })
         //window.confirm("Are you sure you want to delete this milestone?")
-        apiClient.get('sanctum/csrf-cookie')
-        .then(() => apiClient.post('/api/deleteMilestone',{milestone_id:id}));
-                           
-                   this.props.onDeleteMilestone();      
+             
             
     }
 
@@ -45,7 +45,10 @@ export default class Project extends React.Component {
             message: 'Are you sure you want to delete this project?',
             buttons: [
               {
-                label: 'Yes'
+                label: 'Yes',onClick:()=>{ apiClient.get('sanctum/csrf-cookie')
+                .then(() => apiClient.post('/api/deleteProject',{project_id:id}));
+                                   
+                           this.props.onDeleteProject();   }
               },
               {
                 label: 'No'
@@ -53,10 +56,7 @@ export default class Project extends React.Component {
             ]
           })
         //window.confirm("Are you sure you want to delete this project?")
-        apiClient.get('sanctum/csrf-cookie')
-        .then(() => apiClient.post('/api/deleteProject',{project_id:id}));
-                           
-                   this.props.onDeleteProject();   
+       
 
     }
     render() {

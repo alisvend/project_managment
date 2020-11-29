@@ -22,4 +22,6 @@ class Issue extends Model
         return $this->hasMany(Reply::class);
         
     }
+   
+
 }

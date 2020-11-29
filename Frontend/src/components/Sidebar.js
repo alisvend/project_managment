@@ -7,6 +7,7 @@ import Task from './Task';
 import EmpRegister from "./EmployeeForm";
 import axios from "axios";
 import FormDialog from "./NewProject";
+import Issue from "./Issue";
 
 export default class Sidebar extends React.Component {
     constructor(props) {
@@ -17,6 +18,7 @@ export default class Sidebar extends React.Component {
             milestones: [],
             addEmp: false,
             navigate: true,
+            showIssue:false
         };
 
     }
@@ -67,7 +69,8 @@ export default class Sidebar extends React.Component {
     handleChangeProj = (id) => {
         this.fetchMilestones();
         this.setState({ projectID: id });
-
+        this.setState({showIssue:false,addEmp:false});
+        
 
     }
 
@@ -83,7 +86,14 @@ export default class Sidebar extends React.Component {
     handleAddEmployee = (e) => {
         this.setState({ projectID: null });
         this.setState({ addEmp: true }); 
+        this.setState({showIssue:false})
 
+    }
+
+    handleShowIssue = (e) => {
+        this.setState({ projectID: null });
+       this.setState({ addEmp: false }); 
+        this.setState({showIssue:true})
     }
     handleDeleteProject=(e)=>{
 
@@ -177,10 +187,10 @@ export default class Sidebar extends React.Component {
 
 
                         <li className="nav-item">
-                            <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                            <a className="nav-link collapsed" onClick={this.handleShowIssue} data-toggle="collapse" data-target="#collapsePages"
                                 aria-expanded="true" aria-controls="collapsePages">
                                 <i className=""></i>
-                                <span>Pages</span>
+                                <span>Issues</span>
                             </a>
                             <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                                 <div className="bg-white py-2 collapse-inner rounded">
@@ -237,7 +247,7 @@ export default class Sidebar extends React.Component {
                                 <form
                                     className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                                     <div className="input-group">
-                                        <input type="text" className="form-control bg-light border-0 small" placeholder="Search for..."
+                                        <input type="text" className="form-control bg-light border-0 small" placeholder="Search for an issue..."
                                             aria-label="Search" aria-describedby="basic-addon2" />
                                         <div className="input-group-append">
                                             <button className="btn btn-primary" type="button">
@@ -302,14 +312,17 @@ export default class Sidebar extends React.Component {
 
                             <div className="container-fluid">
                                 {
-                                    this.projectexists() ? (<Project milestone={this.state.milestones} 
+                                     this.state.showIssue ? (<Issue />) : (<>
+                                   { this.projectexists() ? (<Project milestone={this.state.milestones} 
                                         onDeleteProject ={this.handleDeleteProject}
                                         onDeleteMilestone={this.handleAddMile}
                                          onAddMilestone={this.handleAddMile} 
                                          projects={this.state.projects} 
-                                         projectID={this.state.projectID} />) : (
-                                        this.state.addEmp ? (<EmpRegister />) : (<></>)
-                                    )
+                                         projectID={this.state.projectID} />) : (this.state.addEmp ? (<EmpRegister />) : (<> </>))
+
+                                   }
+                                       
+                                        </>)
                                 }
 
 

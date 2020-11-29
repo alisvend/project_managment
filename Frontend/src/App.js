@@ -6,6 +6,8 @@ import Register from './components/Register';
 import axios from 'axios';
 import EmpSidebar from './components/EmpSidebar';
 import Sidebar from './components/Sidebar';
+import ShowIssue from './components/ShowIssue';
+
 const App = () => {
   const checkRole = () => {
     const role = sessionStorage.getItem('role');
@@ -63,6 +65,10 @@ const App = () => {
            <Route path='/employeeView' render={props => (
           <EmpSidebar {...props} login={login} />
            
+          )} />
+
+          <Route path='/ShowIssue' render={props => (
+            <ShowIssue {...props} login={login} />
           )} />
           {/* <Route path='/categories' render={props => (
             <Categories {...props} loggedIn={loggedIn} />
