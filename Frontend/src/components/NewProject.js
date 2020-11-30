@@ -91,7 +91,7 @@ export default function FormDialog(props) {
             Cancel
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            Subscribe
+            Submit
           </Button>
         </DialogActions>
       </Dialog>

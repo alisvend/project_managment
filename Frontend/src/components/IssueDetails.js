@@ -61,7 +61,8 @@ export default class IssueDetails extends React.Component {
                         apiClient.get('sanctum/csrf-cookie')
                         .then(() => apiClient.post('/api/deleteIssue', { issue_id: id }));
 
-                        this.props.history.push('/adminView')
+                        if(sessionStorage.getItem('role')==='admin'){this.props.history.push('/adminView')}
+                        else if(sessionStorage.getItem('role')==='employee'){this.props.history.push('/employeeView')}
                     }
                 },
                 {
@@ -100,6 +101,11 @@ export default class IssueDetails extends React.Component {
 
 
     render() {
+        let formatter = new Intl.DateTimeFormat("en-GB", {
+            year: "numeric",
+            month: "long",
+            day: "2-digit"
+          });
         console.log(this.state.issues, "anything");
         return (<>
             
@@ -107,17 +113,26 @@ export default class IssueDetails extends React.Component {
             {this.state.issues.map((issues) => {
                 return (
                     <>
-                        <div><h3>{issues.title}</h3></div>
-                        <div> <div className="shadow" >
-                            <button onClick={() => { this.deleteIssue(issues.id) }}>Delete</button>
+                        <div><h1 className="h2 mb-4 text-gray-800">{issues.title}</h1></div>
+                        <div> <div className="issue-style card body shadow mb-4 shadow  h-100 py-2" >
+                            
                             {/* <div><h3>{this.state.issues.user.name}:</h3></div> */}
-
-                            <div><p>{issues.issue}</p></div>
-                            <NewReply onAddReply={this.fetchAddReply} id={issues.id} />
+                            <div className="title-header card-header py-1">
+                                <div> <div style={{display:"flex",flexDirection:"row"}}> <p>{formatter.format(Date.parse(issues.created_at))}</p>&nbsp;&nbsp;By&nbsp;&nbsp;<p>{issues.user.name}</p></div>
+                       </div></div>
+                            <div className="issue-body"><p>{issues.issue}</p></div>
+                            <div className="side-btns"><button className="delete-issue btn btn-danger btn-icon-split" onClick={() => { this.deleteIssue(issues.id) }}><span className="text">Delete Issue</span></button>
+                            <NewReply onAddReply={this.fetchAddReply} id={issues.id} /></div> 
+                            </div>
+                          
                             {this.state.replies.map((replies) => {
                                 return (
-                                    <div key={replies.id}> <h3>{replies.user.name}</h3><p>{replies.reply}</p><button onClick={() => { this.deleteReply(replies.id) }}>Delete Reply</button></div>)
-                            })}</div>
+                                    <div className="card body border-left-secondary reply-body">
+                                    <div key={replies.id}> <h3>{replies.user.name}</h3><p>{replies.reply}</p>
+                                    <button  onClick={() => { this.deleteReply(replies.id) }}>Delete Reply</button></div></div>)
+                                    
+                          })}
+                        
                         </div></>)
             })}
 
