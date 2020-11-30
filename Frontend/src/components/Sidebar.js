@@ -24,11 +24,11 @@ export default class Sidebar extends React.Component {
     }
     fetchProjects = () => {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.get('/api/projects')
+           apiClient.get('/api/projects')
                 .then(response => {
                     this.setState({ projects: response.data.data })
                 })
-                .catch(error => console.error(error)))
+                .catch(error => console.error(error))
 
         }
     }
@@ -45,14 +45,14 @@ export default class Sidebar extends React.Component {
     };
     fetchMilestones() {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/milestones', { projectID: this.state.projectID })
+            apiClient.post('/api/milestones', { projectID: this.state.projectID })
                 .then(response => {
                     const milestones = response.data;
                     this.setState({ milestones: milestones });
 
                 })
                 .catch(error => console.error(error)
-                ))
+                )
 
         }
     }

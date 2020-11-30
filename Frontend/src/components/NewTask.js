@@ -24,8 +24,7 @@ export default function NewTask(props) {
 
     const addTask = () => {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie')
-                .then(() => apiClient.post('/api/addTask',
+            apiClient.post('/api/addTask',
                     {
                         taskName: taskName,
 
@@ -35,7 +34,7 @@ export default function NewTask(props) {
                     })
 
                     .catch(error => console.error(error)
-                    ))
+                    )
 
         }
     }

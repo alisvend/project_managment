@@ -14,14 +14,13 @@ export default function NewReply(props) {
    
  const addReply = () => {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie')
-                .then(() => apiClient.post('/api/addReply',
+            apiClient.post('/api/addReply',
                     {
                         issueID:props.id,
                         reply: content,
                     })
                     .catch(error => console.error(error)
-                    ))
+                    )
         }
     }
   const handleClickOpen = () => {

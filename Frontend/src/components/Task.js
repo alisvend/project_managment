@@ -32,8 +32,7 @@ export default class Task extends React.Component {
              this.fetchTasks();  
             }
 handleDeleteTask=(id)=>{
-    apiClient.get('sanctum/csrf-cookie')
-    .then(() => apiClient.post('/api/deleteTask',{taskId:id,milestoneID:this.props.id,projectID:this.props.projectID}));
+    apiClient.post('/api/deleteTask',{taskId:id,milestoneID:this.props.id,projectID:this.props.projectID});
     console.log(this.props.id,"propsID");           
           this.fetchTasks();  
           this.props.onDeleteTask();         

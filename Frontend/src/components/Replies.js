@@ -14,14 +14,14 @@ export default class Replies extends React.Component {
     }
     fetchReplies(id) {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie').then(() => apiClient.post('/api/getReplies',{id:id})
+             apiClient.post('/api/getReplies',{id:id})
                 .then(response => {
                     const replies = response.data;
                     this.setState({ replies: replies });
 
                 })
                 .catch(error => console.error(error)
-                ))
+                )
 
         }
     }

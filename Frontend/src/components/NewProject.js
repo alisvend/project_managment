@@ -14,15 +14,14 @@ export default function FormDialog(props) {
 
     const addProject = () => {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie')
-                .then(() => apiClient.post('/api/addProject',
+            apiClient.post('/api/addProject',
                     {
                         projectName: projectName,
                         deadline: deadline
                     })
                
                     .catch(error => console.error(error)
-                    ))
+                    )
 
         }
     }

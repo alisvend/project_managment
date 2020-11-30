@@ -14,14 +14,14 @@ export default function NewIssue(props) {
 
   const addIssue = () => {
     if (sessionStorage.getItem("loggedIn")) {
-      apiClient.get("sanctum/csrf-cookie").then(() =>
+     
         apiClient
           .post("/api/addIssue", {
             title: issueTitle,
             issue: content,
           })
           .catch((error) => console.error(error))
-      );
+      
     }
   };
   const handleClickOpen = () => {

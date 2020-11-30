@@ -24,8 +24,7 @@ export default class Project extends React.Component {
             message: 'Are you sure you want to delete this milestone?',
             buttons: [
               {
-                label: 'Yes', onClick:()=>{apiClient.get('sanctum/csrf-cookie')
-                .then(() => apiClient.post('/api/deleteMilestone',{milestone_id:id,projectID:this.props.projectID}));
+                label: 'Yes', onClick:()=>{apiClient.post('/api/deleteMilestone',{milestone_id:id,projectID:this.props.projectID});
                                    
                            this.props.onDeleteMilestone(); }
               },
@@ -45,8 +44,7 @@ export default class Project extends React.Component {
             message: 'Are you sure you want to delete this project?',
             buttons: [
               {
-                label: 'Yes',onClick:()=>{ apiClient.get('sanctum/csrf-cookie')
-                .then(() => apiClient.post('/api/deleteProject',{project_id:id}));
+                label: 'Yes',onClick:()=>{  apiClient.post('/api/deleteProject',{project_id:id});
                                    
                            this.props.onDeleteProject();   }
               },

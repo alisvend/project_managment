@@ -15,8 +15,7 @@ export default function NewMilestone(props) {
 
     const addMilestone = () => {
         if (sessionStorage.getItem('loggedIn')) {
-            apiClient.get('sanctum/csrf-cookie')
-                .then(() => apiClient.post('/api/addMile',
+           apiClient.post('/api/addMile',
                     {
                         milestoneName: milestoneName,
                         deadline: deadline,
@@ -24,7 +23,7 @@ export default function NewMilestone(props) {
                     })
 
                     .catch(error => console.error(error)
-                    ))
+                    )
 
         }
     }

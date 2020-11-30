@@ -46,14 +46,14 @@ export default class Sidebar extends React.Component {
   }
   fetchProjects = () => {
     if (sessionStorage.getItem("loggedIn")) {
-      apiClient.get("sanctum/csrf-cookie").then(() =>
+     
         apiClient
           .get("/api/employeeProjects")
           .then((response) => {
             this.setState({ projects: response.data });
           })
           .catch((error) => console.error(error))
-      );
+      
     }
   };
 
