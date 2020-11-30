@@ -128,9 +128,9 @@ export default class Project extends React.Component {
                                 
                         </tr>
                         <tr className='thead-dark'>
-                            <th>Milestones</th>
-                            <th></th>
-                            <th style={{textAlign:"center"}} colSpan="2">Tasks</th>
+                        <th colSpan="2"><div className="plus-milestone"><p>Milestones</p><NewMilestone projectID={this.props.projectID} onAddMile={this.handleAddMile} loggedIn={true} /></div></th>
+                            
+                            <th style={{textAlign:"left"}} colSpan="2">Tasks</th>
                             </tr>
                         {this.props.milestone.map((milestones) => { let done="card border-left-sec shadow h-100 py-2"
                             if(milestones.status){  done="card border-left-prim shadow h-100 py-2"}
@@ -164,7 +164,7 @@ export default class Project extends React.Component {
                                 </tr>
                             )
                         })}
-                        <tr><NewMilestone projectID={this.props.projectID} onAddMile={this.handleAddMile} loggedIn={true} /></tr>
+                        <tr></tr>
                     </tbody>
                 </table>
             </>

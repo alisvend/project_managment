@@ -130,7 +130,7 @@ export default class Sidebar extends React.Component {
 
 
                         <li className="nav-item active">
-                            <a className="nav-link" href="index.html">
+                            <a className="nav-link" href="/adminView">
                                 <i className="fas fa-fw fa-tachometer-alt"></i>
                                 <span>Dashboard</span></a>
                         </li>
@@ -151,13 +151,7 @@ export default class Sidebar extends React.Component {
                                 {/* <select>Projects</select> */}
                                 <Projects onChangeProjId={this.handleChangeProj} val={this.state.projectID} projects={this.state.projects} loggedIn={true} />
                             </a>
-                            <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                                <div className="bg-white py-2 collapse-inner rounded">
-                                    <h6 className="collapse-header">Custom Components:</h6>
-                                    <a className="collapse-item" href="buttons.html">Buttons</a>
-                                    <a className="collapse-item" href="cards.html">Cards</a>
-                                </div>
-                            </div>
+                          
                         </li>
                         <li className="nav-item">
                             <a className="nav-link collapsed" onClick={this.handleAddEmployee} data-toggle="collapse" data-target="#collapseTwo"
@@ -165,13 +159,7 @@ export default class Sidebar extends React.Component {
                                 <i className=""></i>
                                 <span>Add Employee</span>
                             </a>
-                            <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                                <div className="bg-white py-2 collapse-inner rounded">
-                                    <h6 className="collapse-header">Custom Components:</h6>
-                                    <a className="collapse-item" href="buttons.html">Buttons</a>
-                                    <a className="collapse-item" href="cards.html">Cards</a>
-                                </div>
-                            </div>
+                            
                         </li>
 
                         <li className="nav-item">
@@ -193,18 +181,7 @@ export default class Sidebar extends React.Component {
                                 <i className=""></i>
                                 <span>Issues</span>
                             </a>
-                            <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                                <div className="bg-white py-2 collapse-inner rounded">
-                                    <h6 className="collapse-header">Login Screens:</h6>
-                                    <a className="collapse-item" href="login.html">Login</a>
-                                    <a className="collapse-item" href="register.html">Register</a>
-                                    <a className="collapse-item" href="forgot-password.html">Forgot Password</a>
-                                    <div className="collapse-divider"></div>
-                                    <h6 className="collapse-header">Other Pages:</h6>
-                                    <a className="collapse-item" href="404.html">404 Page</a>
-                                    <a className="collapse-item" href="blank.html">Blank Page</a>
-                                </div>
-                            </div>
+                           
                         </li>
 
 
@@ -295,8 +272,7 @@ export default class Sidebar extends React.Component {
 
 
                                     <li className="nav-item dropdown no-arrow">
-                                        <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a className="nav-link dropdown-toggle" >
                                             <span className="mr-2 d-none d-lg-inline text-gray-600 small">{sessionStorage.getItem('username')}</span>
                                             <img className="img-profile rounded-circle"
                                                 src="img/profile.png" />

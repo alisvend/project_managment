@@ -38,9 +38,9 @@ export default function NewReply(props) {
   return (
       <div>
             {/* <Button  onClick={handleClickOpen()} ></Button> */}
-      <Button  onClick={handleClickOpen}>
-        Add Reply
-      </Button>
+      <button  className="btn btn-light btn-icon-split"onClick={handleClickOpen}>
+       <span className="text">Add Reply</span> 
+      </button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">New Reply</DialogTitle>
         <DialogContent>
@@ -63,7 +63,7 @@ export default function NewReply(props) {
             Cancel
           </Button>
           <Button onClick={handleSubmit} color="primary">
-            Subscribe
+             Submit
           </Button>
         </DialogActions>
       </Dialog>

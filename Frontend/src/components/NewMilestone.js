@@ -45,9 +45,8 @@ export default function NewMilestone(props) {
     return (
         <div>
 
-            <Button onClick={handleClickOpen}>
-                ADD MILESTONE
-      </Button>
+<button onClick={handleClickOpen} className="plus-blue radius " style={{color:"gray", marginRight: "1em",marginLeft: "1em", float: "right" }}>
+            </button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">New Milestone</DialogTitle>
                 <DialogContent>
@@ -78,7 +77,7 @@ export default function NewMilestone(props) {
                         Cancel
           </Button>
                     <Button onClick={handleSubmit} color="primary">
-                        Subscribe
+                        Submit
           </Button>
                 </DialogActions>
             </Dialog>
